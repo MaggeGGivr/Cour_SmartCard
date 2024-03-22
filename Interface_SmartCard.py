@@ -52,28 +52,11 @@ def detect_card():
     except Exception as e:
         card_info.insert(tk.END, str(e) + "\n")
 
-# Ajouter un bouton "Lire"
-def read_card():
-    try:
-        # Lire la carte
-        connection = smartcard.System.read_card()
-        # Afficher les informations dans le widget Text
-        card_info.insert(tk.END, str(connection) + "\n")
-    except Exception as e:
-        card_info.insert(tk.END, str(e) + "\n")
 
 # Ajouter un bouton "Lire"
 button_read = tk.Button(button_frame, text="Lire", command=read_card, bg="green", fg="black")
 button_read.pack(side=tk.LEFT, padx=10, pady=10)
 
-def write_card():
-    try:
-        # Ecrire la carte
-        connection = smartcard.System.write_card()
-        # Afficher les informations dans le widget Text
-        card_info.insert(tk.END, str(connection) + "\n")
-    except Exception as e:
-        card_info.insert(tk.END, str(e) + "\n")
 
 # Ajouter un bouton "Ecrire"
 button_write = tk.Button(button_frame, text="Ecrire", command=write_card, bg="white", fg="black")
