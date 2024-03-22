@@ -22,6 +22,17 @@ button_frame.pack(side=tk.BOTTOM, fill=tk.X, padx=10, pady=10)
 button_quit = tk.Button(button_frame, text="Quitter", command=windows.destroy, bg="red", fg="black")
 button_quit.pack(side=tk.RIGHT, padx=10, pady=10)
 
+
+# Load the image
+image = tk.PhotoImage(file="c:\\Users\\dfalco\\isen.png")
+
+# Create a label with the image
+image_label = tk.Label(windows, image=image)
+image_label.pack()
+
+# Keep a reference to the image to prevent it from being garbage collected
+image_label.image = image
+
 #detection d'un carte branché
 def detect_card():
     try:
@@ -58,5 +69,9 @@ def write_card():
 # Ajouter un bouton "Ecrire"
 button_write = tk.Button(button_frame, text="Ecrire", command=write_card, bg="white", fg="black")
 button_write.pack(side=tk.BOTTOM, padx=10, pady=10)
+
+# Ajouter un bouton "Détecter"
+button_detect = tk.Button(button_frame, text="Détecter", command=detect_card, bg="White", fg="black")
+button_detect.pack(side=tk.BOTTOM, padx=10, pady=10)
 
 windows.mainloop()
