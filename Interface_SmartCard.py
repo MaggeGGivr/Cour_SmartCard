@@ -26,14 +26,14 @@ button_quit.pack(side=tk.RIGHT, padx=10, pady=10)
 
 
 # Load the image
-# image = tk.PhotoImage(file="c:\\Users\\dfalco\\isen.png")
+image = tk.PhotoImage(file="c:\\Users\\dfalco\\isen.png")
 
 # Create a label with the image
-# image_label = tk.Label(windows, image=image)
-# image_label.pack()
+image_label = tk.Label(windows, image=image)
+image_label.pack()
 
 # Keep a reference to the image to prevent it from being garbage collected
-# image_label.image = image
+image_label.image = image
 
 #detection d'un carte branché
 def detect_card():
