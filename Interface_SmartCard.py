@@ -47,13 +47,16 @@ def detect_card():
             connection.connect()
             # Get the ATR
             atr = connection.getATR()
+            # Convert the ATR to ASCII
+            atr_ascii = bytes.fromhex(toHexString(atr)).decode('utf-8', 'ignore')
             # Display the reader information and ATR in the Text widget
             card_info.insert(tk.END, str(r[0]) + "\n")
-            card_info.insert(tk.END, "ATR: " + toHexString(atr) + "\n")
+            card_info.insert(tk.END, "ATR: " + atr_ascii + "\n")
         else:
             card_info.insert(tk.END, "No smart card readers detected.\n")
     except Exception as e:
         card_info.insert(tk.END, str(e) + "\n")
+
 
 def read_card():
     try:
@@ -65,8 +68,10 @@ def read_card():
         connection.connect()
         # Get the ATR
         atr = connection.getATR()
+        # Convert the ATR to ASCII
+        atr_ascii = bytes.fromhex(toHexString(atr)).decode('utf-8', 'ignore')
         # Display the ATR in the Text widget
-        card_info.insert(tk.END, "ATR: " + toHexString(atr) + "\n")
+        card_info.insert(tk.END, "ATR: " + atr_ascii + "\n")
         # Define the SELECT APDU command
         SELECT = [0xA0, 0xA4, 0x00, 0x00, 0x02]
         DF_TELECOM = [0x7F, 0x10]
