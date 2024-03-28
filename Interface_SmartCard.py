@@ -57,12 +57,12 @@ def detect_card():
 
 
 # Ajouter un bouton "Lire"
-button_read = tk.Button(button_frame, text="Lire", command="read_card", bg="green", fg="black")
+button_read = tk.Button(button_frame, text="Lire", command=read_card, bg="green", fg="black")
 button_read.pack(side=tk.LEFT, padx=10, pady=10)
 
 
 # Ajouter un bouton "Ecrire"
-button_write = tk.Button(button_frame, text="Ecrire", command="write_card", bg="white", fg="black")
+button_write = tk.Button(button_frame, text="Ecrire", command=write_card, bg="white", fg="black")
 button_write.pack(side=tk.BOTTOM, padx=10, pady=10)
 
 # Ajouter un bouton "Détecter"
