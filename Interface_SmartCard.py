@@ -26,7 +26,7 @@ button_quit.pack(side=tk.RIGHT, padx=10, pady=10)
 
 
 # Load the image
-image = tk.PhotoImage(file="C:\ISEN\smartCard\Cour_SmartCard\isen.png")
+image = tk.PhotoImage(file="isen.png")
 
 # Create a label with the image
 image_label = tk.Label(windows, image=image)
@@ -45,8 +45,11 @@ def detect_card():
             connection = r[0].createConnection()
             # Connect to the card
             connection.connect()
-            # Display the reader information in the Text widget
+            # Get the ATR
+            atr = connection.getATR()
+            # Display the reader information and ATR in the Text widget
             card_info.insert(tk.END, str(r[0]) + "\n")
+            card_info.insert(tk.END, "ATR: " + toHexString(atr) + "\n")
         else:
             card_info.insert(tk.END, "No smart card readers detected.\n")
     except Exception as e:
@@ -68,23 +71,27 @@ button_detect.pack(side=tk.BOTTOM, padx=10, pady=10)
 
 windows.mainloop()
 
-# def read_card():
-#     try:
-#         # Get the list of available readers
-#         r = readers()
-#         # Create a connection with the first reader
-#         connection = r[0].createConnection()
-#         # Connect to the card
-#         connection.connect()
-#         # Define the SELECT APDU command
-#         SELECT = [0xA0, 0xA4, 0x00, 0x00, 0x02]
-#         DF_TELECOM = [0x7F, 0x10]
-#         # Send the SELECT APDU command to the card
-#         data, sw1, sw2 = connection.transmit(SELECT + DF_TELECOM)
-#         # Display the response in the Text widget
-#         card_info.insert(tk.END, "%x %x\n" % (sw1, sw2))
-#     except Exception as e:
-#         card_info.insert(tk.END, str(e) + "\n")
+def read_card():
+    try:
+        # Get the list of available readers
+        r = readers()
+        # Create a connection with the first reader
+        connection = r[0].createConnection()
+        # Connect to the card
+        connection.connect()
+        # Get the ATR
+        atr = connection.getATR()
+        # Display the ATR in the Text widget
+        card_info.insert(tk.END, "ATR: " + toHexString(atr) + "\n")
+        # Define the SELECT APDU command
+        SELECT = [0xA0, 0xA4, 0x00, 0x00, 0x02]
+        DF_TELECOM = [0x7F, 0x10]
+        # Send the SELECT APDU command to the card
+        data, sw1, sw2 = connection.transmit(SELECT + DF_TELECOM)
+        # Display the response in the Text widget
+        card_info.insert(tk.END, "%x %x\n" % (sw1, sw2))
+    except Exception as e:
+        card_info.insert(tk.END, str(e) + "\n")
 
 # def write_card():
 #     try:
