@@ -26,7 +26,7 @@ button_quit.pack(side=tk.RIGHT, padx=10, pady=10)
 
 
 # Load the image
-image = tk.PhotoImage(file="c:\\Users\\dfalco\\isen.png")
+image = tk.PhotoImage(file="C:\ISEN\smartCard\Cour_SmartCard\isen.png")
 
 # Create a label with the image
 image_label = tk.Label(windows, image=image)
@@ -54,12 +54,12 @@ def detect_card():
 
 
 # Ajouter un bouton "Lire"
-button_read = tk.Button(button_frame, text="Lire", command=read_card, bg="green", fg="black")
+button_read = tk.Button(button_frame, text="Lire", command="read_card", bg="green", fg="black")
 button_read.pack(side=tk.LEFT, padx=10, pady=10)
 
 
 # Ajouter un bouton "Ecrire"
-button_write = tk.Button(button_frame, text="Ecrire", command=write_card, bg="white", fg="black")
+button_write = tk.Button(button_frame, text="Ecrire", command="write_card", bg="white", fg="black")
 button_write.pack(side=tk.BOTTOM, padx=10, pady=10)
 
 # Ajouter un bouton "Détecter"
