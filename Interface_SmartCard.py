@@ -72,11 +72,13 @@ def read_card():
         DF_TELECOM = [0x7F, 0x10]
         # Send the SELECT APDU command to the card
         data, sw1, sw2 = connection.transmit(SELECT + DF_TELECOM)
+        # Convert the response to a string
+        response_str = ''.join(chr(i) for i in data)
         # Display the response in the Text widget
-        card_info.insert(tk.END, "%x %x\n" % (sw1, sw2))
+        card_info.insert(tk.END, "Response: " + response_str + "\n")
     except Exception as e:
         card_info.insert(tk.END, str(e) + "\n")
-
+        
 # Ajouter un bouton "Lire"
 button_read = tk.Button(button_frame, text="Lire", command=read_card, bg="green", fg="black")
 button_read.pack(side=tk.LEFT, padx=10, pady=10)
