@@ -24,55 +24,54 @@ button_frame.pack(side=tk.BOTTOM, fill=tk.X, padx=10, pady=10)
 button_quit = tk.Button(button_frame, text="Quitter", command=windows.destroy, bg="red", fg="black")
 button_quit.pack(side=tk.RIGHT, padx=10, pady=10)
 
-
-# Load the image
+# Charger l'image
 image = tk.PhotoImage(file="isen.png")
 
-# Create a label with the image
+# Créer un label avec l'image
 image_label = tk.Label(windows, image=image)
 image_label.pack()
 
-# Keep a reference to the image to prevent it from being garbage collected
+# Garder une référence à l'image pour éviter qu'elle ne soit pas collectée par le garbage collector
 image_label.image = image
 
-#detection d'un carte branché
+# Détection d'une carte branchée
 def detect_card():
     try:
-        # Get the list of available readers
+        # Obtenir la liste des lecteurs disponibles
         r = readers()
         if len(r) > 0:
-            # Create a connection with the first reader
+            # Créer une connexion avec le premier lecteur
             connection = r[0].createConnection()
-            # Connect to the card
+            # Se connecter à la carte
             connection.connect()
-            # Get the ATR
+            # Obtenir l'ATR
             atr = connection.getATR()
-            # Display the reader information and ATR in the Text widget
+            # Afficher les informations du lecteur et l'ATR dans le widget Text
             card_info.insert(tk.END, str(r[0]) + "\n")
             card_info.insert(tk.END, "ATR: " + toHexString(atr) + "\n")
         else:
-            card_info.insert(tk.END, "No smart card readers detected.\n")
+            card_info.insert(tk.END, "Aucun lecteur de carte à puce détecté.\n")
     except Exception as e:
         card_info.insert(tk.END, str(e) + "\n")
 
 def read_card():
     try:
-        # Get the list of available readers
+        # Obtenir la liste des lecteurs disponibles
         r = readers()
-        # Create a connection with the first reader
+        # Créer une connexion avec le premier lecteur
         connection = r[0].createConnection()
-        # Connect to the card
+        # Se connecter à la carte
         connection.connect()
-        # Get the ATR
+        # Obtenir l'ATR
         atr = connection.getATR()
-        # Display the ATR in the Text widget
+        # Afficher l'ATR dans le widget Text
         card_info.insert(tk.END, "ATR: " + toHexString(atr) + "\n")
-        # Define the SELECT APDU command
+        # Définir la commande APDU SELECT
         SELECT = [0xA0, 0xA4, 0x00, 0x00, 0x02]
         DF_TELECOM = [0x7F, 0x10]
-        # Send the SELECT APDU command to the card
+        # Envoyer la commande APDU SELECT à la carte
         data, sw1, sw2 = connection.transmit(SELECT + DF_TELECOM)
-        # Display the response in the Text widget
+        # Afficher la réponse dans le widget Text
         card_info.insert(tk.END, "%x %x\n" % (sw1, sw2))
     except Exception as e:
         card_info.insert(tk.END, str(e) + "\n")
@@ -80,7 +79,6 @@ def read_card():
 # Ajouter un bouton "Lire"
 button_read = tk.Button(button_frame, text="Lire", command=read_card, bg="green", fg="black")
 button_read.pack(side=tk.LEFT, padx=10, pady=10)
-
 
 # Ajouter un bouton "Ecrire"
 button_write = tk.Button(button_frame, text="Ecrire", command="write_card", bg="white", fg="black")
@@ -94,18 +92,18 @@ windows.mainloop()
 
 # def write_card():
 #     try:
-#         # Get the list of available readers
+#         # Obtenir la liste des lecteurs disponibles
 #         r = readers()
-#         # Create a connection with the first reader
+#         # Créer une connexion avec le premier lecteur
 #         connection = r[0].createConnection()
-#         # Connect to the card
+#         # Se connecter à la carte
 #         connection.connect()
-#         # Define the WRITE APDU command (replace with your actual command)
+#         # Définir la commande APDU WRITE (remplacer par votre véritable commande)
 #         WRITE = [0xA0, 0xD6, 0x00, 0x00, 0x02]
-#         DATA = [0x01, 0x02]  # Replace with your actual data
-#         # Send the WRITE APDU command to the card
+#         DATA = [0x01, 0x02]  # Remplacer par vos véritables données
+#         # Envoyer la commande APDU WRITE à la carte
 #         data, sw1, sw2 = connection.transmit(WRITE + DATA)
-#         # Display the response in the Text widget
+#         # Afficher la réponse dans le widget Text
 #         card_info.insert(tk.END, "%x %x\n" % (sw1, sw2))
 #     except Exception as e:
 #         card_info.insert(tk.END, str(e) + "\n")
